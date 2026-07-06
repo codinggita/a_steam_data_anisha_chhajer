@@ -1,4 +1,4 @@
-# 🎮 Arcade Stream Backend API
+# 🎮 Arcade Stream Backend API - A Stream Database(MERN) Platform
 
 A scalable and production-ready backend API built using **Node.js, Express.js, MongoDB, and Mongoose** for managing and analyzing the **Steam Games Dataset**.
 
