@@ -25,30 +25,32 @@ The project provides powerful CRUD operations, authentication, filtering, search
 ---
 
 
+## 🌐 What is the Problem?
 
+The gaming industry has grown tremendously over the past decade. Steam alone hosts tens of thousands of games. When datasets become this large, several challenges arise:
+- How do users quickly find the game they're looking for?
+- How can they filter games based on genre, release year, or price?
+- How do developers retrieve only the required information without loading the entire dataset?
+- How can businesses analyze trends like the most popular genres or top publishers?
 
-# 🚀 Features
-
-## Core Features
-
-- RESTful API Architecture
-- MongoDB Database Integration
-- Mongoose Schema Modeling
-- CRUD Operations
-- Pagination
-- Filtering
-- Sorting
-- Search Functionality
-- JWT Authentication
-- Protected Routes
-- Global Error Handling
-- Middleware Architecture
-- Aggregation Pipelines
-- Scalable Folder Structure
-- Environment Variable Configuration
-- API Testing with Postman
+Without an optimized backend, applications become slow, difficult to maintain, and challenging to scale. That is exactly the problem **Arcade Stream** aims to solve.
 
 ---
+
+## ⚡ Our Solution & Core Features
+
+Arcade Stream provides a complete backend infrastructure for managing Steam game data, transforming raw game information into meaningful insights.
+
+- **Authentication**: JWT-based stateless authentication with secure bcrypt password hashing. Protected APIs require valid authentication.
+- **CRUD Operations**: Secure endpoints for Admins to Create, Read, Update, and Delete games.
+- **Search Functionality**: Efficiently search thousands of games by keyword (e.g., *Elden, Minecraft, Counter Strike*).
+- **Advanced Filtering**: Filter by Genre, Price, Developer, Publisher, Release Year, and Free-to-play games (e.g., *Action games under ₹1000 released after 2020*).
+- **Sorting**: Order results by Price, Release Date, Ratings, and Alphabetically to improve user experience.
+- **Pagination**: Returns a bounded subset of records (e.g., 10 games per page) to reduce response size and improve performance.
+- **Robust Analytics**: Complex MongoDB aggregation pipelines that compute genre distribution, developer stats, average game price, release year trends, and popular publishers.
+- **Security**: JWT, password hashing, Helmet, Rate Limiting, Input Validation, Environment Variables, and Global Error Handling.
+
+
 
 # 🛠️ Tech Stack
 
@@ -202,34 +204,24 @@ The project uses JWT-based authentication.
 
 ---
 
-# 📊 Database Design
+## 📊 Sample Game Document (Excerpt)
 
-## Main Collections
-
-### Games Collection
-
-Stores:
-
-- App ID
-- Game Name
-- Release Year
-- Price
-- Genres
-- Developers
-- Publishers
-- Ratings
-- Reviews
-- Supported Platforms
-
-### Users Collection
-
-Stores:
-
-- Authentication Data
-- User Roles
-- Profile Information
-- Saved Games
-- Preferences
+```json
+{
+  "appId": "1245620",
+  "name": "Elden Ring",
+  "releaseYear": 2022,
+  "price": 3999,
+  "genres": ["Action", "RPG"],
+  "developers": ["FromSoftware Inc."],
+  "publishers": ["Bandai Namco Entertainment", "FromSoftware Inc."],
+  "ratings": {
+    "positive": 450000,
+    "negative": 50000
+  },
+  "platforms": ["windows"]
+}
+```
 
 ---
 
@@ -332,30 +324,29 @@ GET /api/v1/search/games?q=elden
 
 ---
 
-# 📈 Aggregation Pipelines
+## 🔬 MongoDB Aggregation Pipelines
 
-MongoDB Aggregation Framework is used for:
+Arcade Stream uses MongoDB Aggregation Pipelines to analyze data without loading it all into memory. These analytics are generated directly inside MongoDB, making them efficient and scalable.
 
-- Genre Distribution Analysis
-- Price Distribution
-- Developer Statistics
-- Publisher Statistics
-- Release Year Trends
-- Popular Games Analytics
+Examples include:
+- **Genre Distribution**: `How many games belong to each genre?` (`$unwind` genres, `$group` by genre, `$sum` count)
+- **Developer Statistics**: `Which developers have released the most games?`
+- **Average game price** and **Release year trends**.
 
 ---
 
-# 🧪 API Testing
+## 🧪 Postman Testing Guide
 
-API testing is done using **Postman**.
+Comprehensive Postman documentation is available:  
+📖 **[Arcade Stream Postman Docs](https://documenter.getpostman.com/view/50840681/2sBXwpMBLs)**
 
-## Postman Collection Includes
-
-- Authentication APIs
-- Game APIs
-- Search APIs
-- Analytics APIs
-- Statistics APIs
+### 📈 API Endpoint Overview
+- **Authentication**: `POST /auth/register`, `POST /auth/login`
+- **Games (CRUD)**: `GET /games`, `POST /games`, `PUT /games/:id`, `DELETE /games/:id`
+- **Search**: `GET /search?q=elden`
+- **Filters**: `GET /games?genre=Action`
+- **Pagination**: `GET /games?page=2&limit=20`
+- **Analytics**: `GET /analytics/genre`
 
 ---
 
